@@ -12,6 +12,7 @@ public class Data_Structure {
 		//TODO update node
 		//TODO trigger update on other system, wait till done
 		//TODO reset token value
+		mNodes[index] = newOne;
 	}
 }
 /*
