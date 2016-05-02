@@ -15,7 +15,7 @@ public class Data_Structure {
 		mNodes[index] = newOne;
 	}
 }
-/*
+/*FFFFFFFFF
 DATA STRUCTURE
 The assignment is to maintain a fixed size set of 150 nodes, which are replicated (duplicated) on 3 computers.
 The distributed set is to be coherent at real time, i.e., each worker thread operates on an up-to-date node. 
