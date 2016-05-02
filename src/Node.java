@@ -13,8 +13,12 @@ public class Node {
 		}
 	}
 	public void shuffleNode(){
+<<<<<<< HEAD
 		mLock.lock();
 		try{Collections.shuffle(mData);}
 		finally{mLock.unlock();}
+=======
+		Collections.shuffle(mData);//comment to see if github is working
+>>>>>>> origin/master
 	}	
 }
