@@ -4,12 +4,26 @@ import java.net.UnknownHostException;
 public class Lab8Tester {
 	public static void main(String a[]){
 		InetAddress ipAddress = null;
+		WorkerThread [] mThreads = null;
+		int ThreadCount = 100;
+		int NodeCount = 150;
+		Node[]Nodes = new Node[150];
+		Token[]Tokens = new Token[150];
 		try {
 			ipAddress = InetAddress.getLocalHost();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//TODO listener is activated before anything else is done
+		for (int thread=0; thread<ThreadCount;thread++){
+			mThreads[thread] = new WorkerThread(Nodes);
+		}
+		
+		for (int thread=0; thread<ThreadCount;thread++){
+			mThreads[thread].start();
+		}
+
 	}
 }
 /*
