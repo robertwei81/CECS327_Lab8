@@ -1,7 +1,15 @@
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class Lab8Tester {
 	public static void main(String a[]){
-		
+		InetAddress ipAddress = null;
+		try {
+			ipAddress = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 /*
