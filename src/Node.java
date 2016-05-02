@@ -1,16 +1,16 @@
 import java.util.*;
 public class Node {
-	ArrayList<Character> Data= new ArrayList<Character>();
+	ArrayList<Character> mData= new ArrayList<Character>();
 	Node(){initNode();}
 	private void initNode(){
 		Random rand = new Random();
 		String letterCAPs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		for (int i=0;i<500;i++){
-			Data.add(letterCAPs.charAt(rand.nextInt(letterCAPs.length())));
+			mData.add(letterCAPs.charAt(rand.nextInt(letterCAPs.length())));
 		}
 	}
 	public void shuffleNode(){
-		Collections.shuffle(Data);
+		Collections.shuffle(mData);
 	}	
 }
 /*

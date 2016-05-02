@@ -1,12 +1,12 @@
 
 public class Data_Structure {
-	Node[] Nodes;
-	float [] Tokens;
+	Node[] mNodes;
+	float [] mTokens;
 	Data_Structure(){
-		 Nodes = new Node[150];
-		 Tokens = new float [150];		// all start at zero
+		 mNodes = new Node[150];
+		 mTokens = new float [150];		// all start at zero
 	}
-	void UpdateNode(){
+	void UpdateNode(int index, Node newOne){
 		//TODO check token to match with current thread
 		//TODO set token
 		//TODO update node
