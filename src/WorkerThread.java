@@ -5,9 +5,10 @@ public class WorkerThread extends Thread{
 	private Random mRand;
 	private int mNumOfNodes = 150;
 	private int mRepetition = 200;
-	Data_Structure mDataPoint;
+	Node[]mDataPoint;
 	private Lock mLock;
-	WorkerThread(Data_Structure orgData){	// must have a way to point back to data, and tokens
+	WorkerThread(){}
+	WorkerThread(Node[]orgData){	// must have a way to point back to data, and tokens
 		mRand = new Random();
 		mDataPoint = orgData;
 		mLock = new ReentrantLock();
@@ -29,7 +30,7 @@ public class WorkerThread extends Thread{
 	private void Update(int index){
 		mLock.lock();
 		try{
-			mDataPoint.mNodes[index].shuffleNode();
+			mDataPoint[index].shuffleNode();
 			Synch(index);
 		}	
 		//catch(){}

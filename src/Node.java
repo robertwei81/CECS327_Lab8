@@ -1,7 +1,7 @@
 import java.util.*;
 public class Node {
 	ArrayList<Character> mData= new ArrayList<Character>();
-	Node(){initNode();}
+	Node(){}
 	private void initNode(){
 		Random rand = new Random();
 		String letterCAPs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
