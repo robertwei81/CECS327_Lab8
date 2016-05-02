@@ -1,8 +1,11 @@
 import java.util.*;
+import java.util.concurrent.locks.*;
 public class Node {
 	ArrayList<Character> mData= new ArrayList<Character>();
-	Node(){}
-	private void initNode(){
+	private Lock mLock = new ReentrantLock();
+	Node(){}						// default constructor
+	Node(int size){initNode(size);}	// trigger constructor with specific size
+	public void initNode(int size){
 		Random rand = new Random();
 		String letterCAPs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		for (int i=0;i<500;i++){
@@ -10,12 +13,8 @@ public class Node {
 		}
 	}
 	public void shuffleNode(){
-		Collections.shuffle(mData);
+		mLock.lock();
+		try{Collections.shuffle(mData);}
+		finally{mLock.unlock();}
 	}	
 }
-/*
-NODES
-Each node stores an array of 500 characters (for simplicity). 
-When a worker thread updates a node, it randomly shuffles the 500 characters. 
-  (This is a simple task to give a worker thread something to do.)
-*/

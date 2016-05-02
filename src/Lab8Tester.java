@@ -1,5 +1,6 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class Lab8Tester {
 	public static void main(String a[]){
@@ -7,19 +8,26 @@ public class Lab8Tester {
 		WorkerThread [] mThreads = null;
 		int ThreadCount = 100;
 		int NodeCount = 150;
+		int CharactorCount = 500;
 		Node[]Nodes = new Node[150];
-		Token[]Tokens = new Token[150];
-		try {
-			ipAddress = InetAddress.getLocalHost();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		ArrayList<Token> Tokens = new ArrayList<Token>();
+		
+		try {ipAddress = InetAddress.getLocalHost();} 
+		catch (UnknownHostException e) {e.printStackTrace();}
+		
+		//Initialize Nodes
+		Token football; 
+		for (int count=0;count<NodeCount;count++){
+			Nodes[count] = new Node();
+			Nodes[count].initNode(CharactorCount);
+			football = new Token(count, ipAddress, ThreadID.get());
 		}
-		//TODO listener is activated before anything else is done
+		
+		//Initialize Threads
 		for (int thread=0; thread<ThreadCount;thread++){
 			mThreads[thread] = new WorkerThread(Nodes);
 		}
-		
+		//Start Threads
 		for (int thread=0; thread<ThreadCount;thread++){
 			mThreads[thread].start();
 		}
@@ -52,3 +60,9 @@ Each node stores an array of 500 characters (for simplicity).
 When a worker thread updates a node, it randomly shuffles the 500 characters. 
   (This is a simple task to give a worker thread something to do.)
 */
+
+//TODO check token to match with current thread
+//TODO set token
+//TODO update node
+//TODO trigger update on other system, wait till done
+//TODO reset token value
