@@ -5,16 +5,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Requestor {
-<<<<<<< HEAD
 	int port;
 	String message;
 	public Requestor(){}
 	public Requestor(int portNum, String msg){
 		port = portNum;
 		message = msg;
-=======
-	public Requestor(){
->>>>>>> origin/master
 	}
 	public static void sendMessage(int portNum, String msg){
 		try{
@@ -35,7 +31,6 @@ public class Requestor {
 			
 		}
 	}
-<<<<<<< HEAD
 	public boolean getToken(Token football) {
 		// TODO Auto-generated method stub
 		// send msg to other system to see if token is taken, 
@@ -44,9 +39,7 @@ public class Requestor {
 		return true;//this need to be visited
 	}
 	
-=======
 	public static void main(String[] args){
 		Requestor.sendMessage(1234, "This message is a test.");
 	}
->>>>>>> origin/master
 }
