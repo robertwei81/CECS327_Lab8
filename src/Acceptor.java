@@ -5,17 +5,13 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class Acceptor {
-	InetAddress host;
-	int port;
-	public Acceptor(InetAddress hostName, int portNum){
-		host = hostName;
-		port = portNum;
+	public Acceptor(){
 	}
-	
-	public void read(){
+	public static void readMessage(int portNumber, String host){
 		try{
-			int acceptorPort = this.port;
-			Socket mySocket = new Socket(this.host, acceptorPort);
+			InetAddress hostName = InetAddress.getByName(host);
+			int acceptorPort = portNumber;
+			Socket mySocket = new Socket(hostName, acceptorPort);
 			System.out.println("Connection request granted");
 			InputStream inStream = mySocket.getInputStream();
 			BufferedReader socketInput = new BufferedReader(new InputStreamReader(inStream));
@@ -28,5 +24,8 @@ public class Acceptor {
 		}catch (Exception e){
 			
 		}
+	}
+	public static void main(String[] args){
+		Acceptor.readMessage(1234, "192.168.0.8");
 	}
 }

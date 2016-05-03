@@ -5,21 +5,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Requestor {
-	int port;
-	String message;
-	public Requestor(int portNum, String msg){
-		port = portNum;
-		message = msg;
+	public Requestor(){
 	}
-	public void sendMessage(){
+	public static void sendMessage(int portNum, String msg){
 		try{
-			ServerSocket connectionSocket = new ServerSocket(this.port);
+			ServerSocket connectionSocket = new ServerSocket(portNum);
 			System.out.println("now ready to accept a connection");
 			Socket dataSocket = connectionSocket.accept();
 			System.out.println("connection accepted");
 			OutputStream outStream = dataSocket.getOutputStream();
 			PrintWriter socketOutput = new PrintWriter(new OutputStreamWriter(outStream));
-			socketOutput.println(this.message);
+			socketOutput.println(msg);
 			socketOutput.flush();
 			System.out.println("message sent");
 			dataSocket.close();
@@ -30,5 +26,7 @@ public class Requestor {
 			
 		}
 	}
-	
+	public static void main(String[] args){
+		Requestor.sendMessage(1234, "This message is a test.");
+	}
 }
