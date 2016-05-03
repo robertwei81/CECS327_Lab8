@@ -7,6 +7,7 @@ import java.net.Socket;
 public class Requestor {
 	int port;
 	String message;
+	public Requestor(){}
 	public Requestor(int portNum, String msg){
 		port = portNum;
 		message = msg;
@@ -29,6 +30,13 @@ public class Requestor {
 		} catch(Exception e){
 			
 		}
+	}
+	public boolean getToken(Token football) {
+		// TODO Auto-generated method stub
+		// send msg to other system to see if token is taken, 
+		//  if taken by either system, return false and waits
+		//  if not taken, set the token on their system as taken and proceed
+		return true;//this need to be visited
 	}
 	
 }

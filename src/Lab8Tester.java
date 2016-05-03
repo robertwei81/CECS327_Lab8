@@ -11,16 +11,24 @@ public class Lab8Tester {
 		int CharactorCount = 500;
 		Node[]Nodes = new Node[150];
 		ArrayList<Token> Tokens = new ArrayList<Token>();
-		
+		Requestor mRequestAgent = new Requestor();
+
 		try {ipAddress = InetAddress.getLocalHost();} 
 		catch (UnknownHostException e) {e.printStackTrace();}
 		
 		//Initialize Nodes
 		Token football; 
 		for (int count=0;count<NodeCount;count++){
-			Nodes[count] = new Node();
-			Nodes[count].initNode(CharactorCount);
-			football = new Token(count, ipAddress, ThreadID.get());
+			Nodes[count] = new Node();				//create node
+			Nodes[count].initNode(CharactorCount);	//initialize nodes with 500 chars
+			football = new Token(count, ipAddress, ThreadID.get()); //create token for update
+			try {
+				while (mRequestAgent.getToken(football)==false)
+					await();
+			}
+			finally{
+			
+			}
 		}
 		
 		//Initialize Threads
@@ -31,7 +39,6 @@ public class Lab8Tester {
 		for (int thread=0; thread<ThreadCount;thread++){
 			mThreads[thread].start();
 		}
-
 	}
 }
 /*
