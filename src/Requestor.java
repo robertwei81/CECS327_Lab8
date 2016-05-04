@@ -14,9 +14,9 @@ public class Requestor{
 	public Requestor(){}
 	public Requestor(int portNum){
 		try {
-			connectionSocket = new ServerSocket(portNum);
-			dataSocket = connectionSocket.accept();
-			dataOut = new ObjectOutputStream(dataSocket.getOutputStream());
+			this.connectionSocket = new ServerSocket(portNum);
+			this.dataSocket = connectionSocket.accept();
+			this.dataOut = new ObjectOutputStream(dataSocket.getOutputStream());
 		} catch (IOException e) {}
 	}
 	public Requestor(int portNum,Token footballUpdate){
