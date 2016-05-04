@@ -2,7 +2,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-public class Lab8Tester {
+public class Lab8Tester {  
+	//Purpose: 	construct the necessary data constructs
+	//			create the thread to do the work
+	//			activate the threads
 	public static void main(String a[]){
 		InetAddress ipAddress = null;
 		WorkerThread [] mThreads = null;
@@ -22,18 +25,20 @@ public class Lab8Tester {
 			Nodes[count] = new Node();				//create node
 			Nodes[count].initNode(CharactorCount);	//initialize nodes with 500 chars
 			football = new Token(count, ipAddress, ThreadID.get()); //create token for update
-			try {
-				while (mRequestAgent.getToken(football)==false)
-					await();
-			}
-			finally{
 			
-			}
+			mRequestAgent.getToken(football);
+			//need to process tokens 
+			//and get other system to listen
+			//and then update
+		}
+		
+		for(int count=0;count<NodeCount;count++){
+			Acceptor.readMessage(1234, host);
 		}
 		
 		//Initialize Threads
 		for (int thread=0; thread<ThreadCount;thread++){
-			mThreads[thread] = new WorkerThread(Nodes);
+			mThreads[thread] = new WorkerThread(Nodes,Tokens);
 		}
 		//Start Threads
 		for (int thread=0; thread<ThreadCount;thread++){
