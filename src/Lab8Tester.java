@@ -35,8 +35,10 @@ public class Lab8Tester {
 				football.mTokenState=1;					//set token for update
 				for (int list=0;list<mSystemList.size();list++) //loop the system list
 				{
-					mRequestAgent.Update(football,mSystemList.get(list));	//pass ball to requester,and who to send to
-					mRequestAgent.start();
+					if (mSystemList.get(list) != ipAddress){
+						mRequestAgent.Update(football,mSystemList.get(list));	//pass ball to requester,and who to send to
+						mRequestAgent.start();
+					}
 				}
 			}	
 		}else{
