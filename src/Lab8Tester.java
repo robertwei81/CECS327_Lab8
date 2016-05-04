@@ -15,18 +15,16 @@ public class Lab8Tester {
 		int NodeCount = 150;				// req: num of nodes
 		int CharactorCount = 500;			// req: num of char per node
 		Node[]Nodes = new Node[150];		// node array
-		ArrayList<Token> Tokens = new ArrayList<Token>(); 	//arraylist of token? may need?
 		ArrayList<InetAddress> mSystemList = new ArrayList<InetAddress>();
-		mSystemList.add(primaryHostIP);
 		mSystemList.add(ipAddress);
-		mSystemList.addAll(//any others that we need to add goes to this list;)
-		
+		mSystemList.add(primaryHostIP);//add additional system list as needed
+		Requestor mRequestAgent = new Requestor();  //may need to request for update for other systems
+
 		try {ipAddress = InetAddress.getLocalHost();} 
 		catch (UnknownHostException e) {e.printStackTrace();}
 		
 		//Initialize Nodes
 		if (primaryHostIP == ipAddress){
-			Requestor mRequestAgent = new Requestor();  //may need to request for update for other systems
 			Token football = new Token(); //create token for update
 			for (int count=0;count<NodeCount;count++){
 				Nodes[count] = new Node();				//create node
@@ -35,17 +33,24 @@ public class Lab8Tester {
 				football.mSystemIP=ipAddress;			//set token system ip to this host
 				football.mThreadID=ThreadID.get();		//set token thread id to this thread
 				football.mTokenState=1;					//set token for update
-				mRequestAgent.sendToken(football);		//pass ball to requester
+				for (int list=0;list<mSystemList.size();list++) //loop the system list
+				{
+					mRequestAgent.Update(football,mSystemList.get(list));	//pass ball to requester,and who to send to
+					mRequestAgent.start();
+				}
 			}	
 		}else{
 			//for systems other than the primary system that creates the nodes
+			Acceptor accept;
 			for(int count=0;count<NodeCount;count++){
-				Acceptor accept = new Acceptor(, primaryHostIP);				
+				accept = new Acceptor();
+				accept.start();
+				// do we need a slight wait between each receiption?
 			}	
 		}
 		//Initialize Threads
 		for (int thread=0; thread<ThreadCount;thread++){
-			mThreads[thread] = new WorkerThread(Nodes,Tokens);
+			mThreads[thread] = new WorkerThread(Nodes,Tokens,mRequestAgent, mAcceptAgent);
 		}
 		//Start Threads
 		for (int thread=0; thread<ThreadCount;thread++){

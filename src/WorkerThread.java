@@ -7,14 +7,14 @@ public class WorkerThread extends Thread{
 	private int mNumOfNodes = 150;
 	private int mRepetition = 200;
 	Node[]mDataPoint;
-	ArrayList<Token>mTokens;
+	//ArrayList<Token>mTokens;
 	private Lock mLock;
 	Requestor mRequestAgent = new Requestor();
 	WorkerThread(){}
 	WorkerThread(Node[]orgData,ArrayList<Token> tokens){	// must have a way to point back to data, and tokens
 		mRand = new Random();
 		mDataPoint = orgData;
-		mTokens = tokens;
+		//mTokens = tokens;
 		mLock = new ReentrantLock();
 	}
 	public void run(){
@@ -27,20 +27,6 @@ public class WorkerThread extends Thread{
 		}	
 	}
 	private void GrabToken(int index){
-		//TODO attempt to grab token
-		//   loop&&wait till token is received
-
-		InetAddress ipAddress = null;
-		try {ipAddress = InetAddress.getLocalHost();} 
-		catch (UnknownHostException e) {e.printStackTrace();}
-		Token football = mTokens.get(0);
-		//sent football to requester; ends job here
-		//calls accepter to receive a football; starts another
-		//waits for accepter to return with ball; check if football match
-		//  if miss match put
-		// then if true then update
-		
-		mRequestAgent.getToken(football);
 	}
 	private void Update(int index){
 		mLock.lock();
@@ -53,9 +39,5 @@ public class WorkerThread extends Thread{
 	}
 	private void Synch(int index){
 		//TODO attempt to tell other systems they need to update...
-	}
-	private void DropUsedToken(Token football){
-		//TODO called upon by local system to remove the token that was just used for the thread
-		if (football == mTokens.get(0)){mTokens.remove(0);}
 	}
 }

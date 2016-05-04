@@ -1,8 +1,8 @@
 import java.util.*;
 import java.util.concurrent.locks.*;
 public class Node {
-	ArrayList<Character> mData= new ArrayList<Character>();
-	private Lock mLock = new ReentrantLock();
+	public ArrayList<Character> mData= new ArrayList<Character>();
+	public Lock mLock = new ReentrantLock();
 	Node(){}						// default constructor
 	Node(int size){initNode(size);}	// trigger constructor with specific size
 	public void initNode(int size){
@@ -16,5 +16,5 @@ public class Node {
 		mLock.lock();
 		try{Collections.shuffle(mData);}
 		finally{mLock.unlock();}
-	}	
+	}
 }
