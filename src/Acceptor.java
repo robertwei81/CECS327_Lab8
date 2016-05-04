@@ -1,28 +1,34 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class Acceptor{
-	public Acceptor(){}
-	
-	public static void readMessage(int portNumber, String host, int x){
+public class Acceptor {
+	Socket mySocket;
+	ObjectInputStream dataIn;
+	InetAddress hostName;
+	public Acceptor(int portNumber, String host){
 		try{
-			InetAddress hostName = InetAddress.getByName(host);
-			Socket mySocket = new Socket(hostName, portNumber);
-			ObjectInputStream dataIn = new ObjectInputStream(mySocket.getInputStream());
-			if(x == 0){
-				Node inObject = (Node) dataIn.readObject();
-			}else{
-				Token inObject = (Token) dataIn.readObject();
-				System.out.println(inObject.mIndex);
-			}
-			mySocket.close();
-		}catch (Exception e){
+			hostName = InetAddress.getByName(host);
+			mySocket = new Socket(hostName, portNumber);
+			dataIn = new ObjectInputStream(mySocket.getInputStream());
+		}catch(Exception e){
 			
 		}
+	}
+	public Node readNode() throws ClassNotFoundException, IOException{	
+		Node inObject = (Node) this.dataIn.readObject();
+		return inObject;
+	}
+	public Token readToken() throws ClassNotFoundException, IOException{	
+		Token inObject = (Token) this.dataIn.readObject();
+		return inObject;
+	}
+	public void closeSocket() throws IOException{
+		this.mySocket.close();
 	}
 	public static void main(String[] args){
 		//Acceptor.readMessage(1234, "192.168.0.8");

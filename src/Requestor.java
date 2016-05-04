@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -7,40 +8,40 @@ import java.net.Socket;
 
 
 public class Requestor{
-	public Requestor(){}
-	public static void sendData(int portNum, Token outToken){
-		try{
-			ServerSocket connectionSocket = new ServerSocket(portNum);
-			Socket dataSocket = connectionSocket.accept();
-			ObjectOutputStream dataOut = new ObjectOutputStream(dataSocket.getOutputStream());
-			dataOut.writeObject(outToken);
-			dataOut.flush();
-			dataSocket.close();
-			connectionSocket.close();
-		} catch(Exception e){
-		}
+	Socket dataSocket;
+	ObjectOutputStream dataOut;
+	ServerSocket connectionSocket;
+	public Requestor(int portNum){
+		try {
+			connectionSocket = new ServerSocket(portNum);
+			dataSocket = connectionSocket.accept();
+			dataOut = new ObjectOutputStream(dataSocket.getOutputStream());
+		} catch (IOException e) {}
 	}
-<<<<<<< HEAD
+	public void sendToken(Token outToken){
+		try {
+			this.dataOut.writeObject(outToken);
+			this.dataOut.flush();
+		} catch (IOException e) {}
+	}
+	public void sendNode(Node outNode){
+		try {
+			this.dataOut.writeObject(outNode);
+			this.dataOut.flush();
+		} catch (IOException e) {}
+	}
+	public void closeSocket(){
+		try{
+			this.dataSocket.close();
+			this.connectionSocket.close();
+		} catch(IOException e){}
+	}
 	public void getToken(Token football) {
 		// TODO Auto-generated method stub
 		// send msg to other system to see if token is taken, 
 		//  if taken by either system, return false and waits
 		//  if not taken, set the token on their system as taken and proceed
-=======
-	public static void sendData(int portNum, Node outNode){
-		try{
-			ServerSocket connectionSocket = new ServerSocket(portNum);
-			Socket dataSocket = connectionSocket.accept();
-			ObjectOutputStream dataOut = new ObjectOutputStream(dataSocket.getOutputStream());
-			dataOut.writeObject(outNode);
-			dataOut.flush();
-			dataSocket.close();
-			connectionSocket.close();
-		} catch(Exception e){
-		}
->>>>>>> origin/master
 	}
-	
 	public static void main(String[] args){
 		//Requestor.sendData(5000, new Token());
 	}
