@@ -7,35 +7,42 @@ public class Lab8Tester {
 	//			create the thread to do the work
 	//			activate the threads
 	public static void main(String a[]){
-		InetAddress ipAddress = null;
-		WorkerThread [] mThreads = null;
-		int ThreadCount = 100;
-		int NodeCount = 150;
-		int CharactorCount = 500;
-		Node[]Nodes = new Node[150];
-		ArrayList<Token> Tokens = new ArrayList<Token>();
-		Requestor mRequestAgent = new Requestor();
-
+		InetAddress ipAddress = null;		// current host ip value
+		InetAddress primaryHostIP = null; 	// need to change based on our setup
+		int portNumber = 1234; 				// need to change based on our setup
+		WorkerThread [] mThreads = null;	// worker thread array
+		int ThreadCount = 100;				// req: num of threads
+		int NodeCount = 150;				// req: num of nodes
+		int CharactorCount = 500;			// req: num of char per node
+		Node[]Nodes = new Node[150];		// node array
+		ArrayList<Token> Tokens = new ArrayList<Token>(); 	//arraylist of token? may need?
+		
 		try {ipAddress = InetAddress.getLocalHost();} 
 		catch (UnknownHostException e) {e.printStackTrace();}
 		
 		//Initialize Nodes
-		Token football; 
-		for (int count=0;count<NodeCount;count++){
-			Nodes[count] = new Node();				//create node
-			Nodes[count].initNode(CharactorCount);	//initialize nodes with 500 chars
-			football = new Token(count, ipAddress, ThreadID.get()); //create token for update
-			
-			mRequestAgent.getToken(football);
-			//need to process tokens 
-			//and get other system to listen
-			//and then update
+		if (primaryHostIP == ipAddress){
+			Requestor mRequestAgent = new Requestor();  //may need to request for update for other systems
+			Token football = new Token(); //create token for update
+			for (int count=0;count<NodeCount;count++){
+				Nodes[count] = new Node();				//create node
+				Nodes[count].initNode(CharactorCount);	//initialize nodes with 500 chars
+				football.mIndex=count;					//set token node id to current index
+				football.mSystemIP=ipAddress;			//set token system ip to this host
+				football.mThreadID=ThreadID.get();		//set token thread id to this thread
+				football.mTokenState=1;					//set token for update
+				mRequestAgent.getToken(football);		//pass ball to requester
+				//need to process tokens 
+				//and get other system to listen
+				//and then update
+			}	
+		}else{
+			//for systems other than the primary system that creates the nodes
+			for(int count=0;count<NodeCount;count++){
+				Acceptor accept = new Acceptor(, primaryHostIP);
+				
+			}	
 		}
-		
-		for(int count=0;count<NodeCount;count++){
-			Acceptor.readMessage(1234, host);
-		}
-		
 		//Initialize Threads
 		for (int thread=0; thread<ThreadCount;thread++){
 			mThreads[thread] = new WorkerThread(Nodes,Tokens);

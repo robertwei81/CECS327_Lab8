@@ -11,12 +11,25 @@ public class Requestor{
 	Socket dataSocket;
 	ObjectOutputStream dataOut;
 	ServerSocket connectionSocket;
+	public Requestor(){}
 	public Requestor(int portNum){
 		try {
 			connectionSocket = new ServerSocket(portNum);
 			dataSocket = connectionSocket.accept();
 			dataOut = new ObjectOutputStream(dataSocket.getOutputStream());
 		} catch (IOException e) {}
+	}
+	public Requestor(int portNum,Token footballUpdate){
+		try {
+			connectionSocket = new ServerSocket(portNum);
+			dataSocket = connectionSocket.accept();
+			dataOut = new ObjectOutputStream(dataSocket.getOutputStream());
+		} catch (IOException e) {}
+		//footballUpdate.mSystemIP;	//from which host
+		//footballUpdate.mThreadID;	//on that host which thread
+		//footballUpdate.mIndex;	//updating which node
+		//footballUpdate.mTokenState;	//what are we doing? 
+		//0-request token, 1-permission received okay, 2-request update
 	}
 	public void sendToken(Token outToken){
 		try {
@@ -35,12 +48,6 @@ public class Requestor{
 			this.dataSocket.close();
 			this.connectionSocket.close();
 		} catch(IOException e){}
-	}
-	public void getToken(Token football) {
-		// TODO Auto-generated method stub
-		// send msg to other system to see if token is taken, 
-		//  if taken by either system, return false and waits
-		//  if not taken, set the token on their system as taken and proceed
 	}
 	public static void main(String[] args){
 		//Requestor.sendData(5000, new Token());
