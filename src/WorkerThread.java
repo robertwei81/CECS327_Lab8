@@ -10,11 +10,11 @@ public class WorkerThread extends Thread{
 	//ArrayList<Token>mTokens;
 	private Lock mLock;
 	Requestor mRequestAgent = new Requestor();
-	WorkerThread(){}
-	WorkerThread(Node[]orgData,ArrayList<Token> tokens){	// must have a way to point back to data, and tokens
+	WorkerThread(){	// must have a way to point back to data, and tokens
+	}
+	public WorkerThread(Node[] nodes, Requestor mRequestAgent2, Acceptor mAcceptorAgent) {
 		mRand = new Random();
-		mDataPoint = orgData;
-		//mTokens = tokens;
+		mDataPoint = nodes;
 		mLock = new ReentrantLock();
 	}
 	public void run(){

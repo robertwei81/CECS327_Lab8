@@ -9,8 +9,8 @@ public class Lab8Tester {
 	public static void main(String a[]){
 		InetAddress ipAddress = null;		// current host ip value
 		InetAddress primaryHostIP = null; 	// need to change based on our setup
-		int portNumber = 1234; 				// need to change based on our setup
-		WorkerThread [] mThreads = null;	// worker thread array
+		//int portNumber = 1024; 				// need to change based on our setup
+		WorkerThread [] mThreads = new WorkerThread[100];	// worker thread array
 		int ThreadCount = 100;				// req: num of threads
 		int NodeCount = 150;				// req: num of nodes
 		int CharactorCount = 500;			// req: num of char per node
@@ -19,6 +19,7 @@ public class Lab8Tester {
 		mSystemList.add(ipAddress);
 		mSystemList.add(primaryHostIP);//add additional system list as needed
 		Requestor mRequestAgent = new Requestor();  //may need to request for update for other systems
+		Acceptor mAcceptorAgent = new Acceptor();
 
 		try {ipAddress = InetAddress.getLocalHost();} 
 		catch (UnknownHostException e) {e.printStackTrace();}
@@ -41,16 +42,15 @@ public class Lab8Tester {
 			}	
 		}else{
 			//for systems other than the primary system that creates the nodes
-			Acceptor accept;
 			for(int count=0;count<NodeCount;count++){
-				accept = new Acceptor();
-				accept.start();
-				// do we need a slight wait between each receiption?
+				mAcceptorAgent = new Acceptor();
+				mAcceptorAgent.start();
+				// do we need a slight wait between each reception?
 			}	
 		}
 		//Initialize Threads
 		for (int thread=0; thread<ThreadCount;thread++){
-			mThreads[thread] = new WorkerThread(Nodes,Tokens,mRequestAgent, mAcceptAgent);
+			mThreads[thread] = new WorkerThread(Nodes,mRequestAgent, mAcceptorAgent);
 		}
 		//Start Threads
 		for (int thread=0; thread<ThreadCount;thread++){
