@@ -16,6 +16,10 @@ public class Lab8Tester {
 		int CharactorCount = 500;			// req: num of char per node
 		Node[]Nodes = new Node[150];		// node array
 		ArrayList<Token> Tokens = new ArrayList<Token>(); 	//arraylist of token? may need?
+		ArrayList<InetAddress> mSystemList = new ArrayList<InetAddress>();
+		mSystemList.add(primaryHostIP);
+		mSystemList.add(ipAddress);
+		mSystemList.addAll(//any others that we need to add goes to this list;)
 		
 		try {ipAddress = InetAddress.getLocalHost();} 
 		catch (UnknownHostException e) {e.printStackTrace();}
@@ -31,16 +35,12 @@ public class Lab8Tester {
 				football.mSystemIP=ipAddress;			//set token system ip to this host
 				football.mThreadID=ThreadID.get();		//set token thread id to this thread
 				football.mTokenState=1;					//set token for update
-				mRequestAgent.getToken(football);		//pass ball to requester
-				//need to process tokens 
-				//and get other system to listen
-				//and then update
+				mRequestAgent.sendToken(football);		//pass ball to requester
 			}	
 		}else{
 			//for systems other than the primary system that creates the nodes
 			for(int count=0;count<NodeCount;count++){
-				Acceptor accept = new Acceptor(, primaryHostIP);
-				
+				Acceptor accept = new Acceptor(, primaryHostIP);				
 			}	
 		}
 		//Initialize Threads
