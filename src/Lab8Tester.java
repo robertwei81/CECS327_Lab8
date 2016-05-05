@@ -8,7 +8,13 @@ public class Lab8Tester {
 	//			activate the threads
 	public static void main(String a[]){
 		InetAddress ipAddress = null;		// current host ip value
-		InetAddress primaryHostIP = null; 	// need to change based on our setup
+		try {ipAddress = InetAddress.getLocalHost();} 
+		catch (UnknownHostException e) {e.printStackTrace();}
+		
+		InetAddress primaryHostIP = null;
+		try {primaryHostIP = InetAddress.getByName("172.20.10.3");}
+		catch (UnknownHostException e1) {e1.printStackTrace();} 	// need to change based on our setup
+		
 		WorkerThread [] mThreads = new WorkerThread[100];	// worker thread array
 		int ThreadCount = 100;				// req: num of threads
 		int NodeCount = 150;				// req: num of nodes
@@ -20,8 +26,7 @@ public class Lab8Tester {
 		Requestor mRequestAgent = new Requestor();  //may need to request for update for other systems
 		Acceptor mAcceptorAgent = new Acceptor();
 
-		try {ipAddress = InetAddress.getLocalHost();} 
-		catch (UnknownHostException e) {e.printStackTrace();}
+
 		
 		//Initialize Nodes
 		if (primaryHostIP == ipAddress){
@@ -51,7 +56,7 @@ public class Lab8Tester {
 		}
 		//Initialize Threads
 		for (int thread=0; thread<ThreadCount;thread++){
-			mThreads[thread] = new WorkerThread(Nodes);
+			mThreads[thread] = new WorkerThread(Nodes,mSystemList);
 		}
 		//Start Threads
 		for (int thread=0; thread<ThreadCount;thread++){

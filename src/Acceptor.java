@@ -16,7 +16,7 @@ public class Acceptor extends Thread{
     Token CurrentToken;
     public ArrayList<InetAddress>mSystemList= new ArrayList<InetAddress>();
 
-    public Acceptor(){}					//default, dont open socket till run time
+    public Acceptor(){OpenReceiveSocket();}					//default, dont open socket till run time
 	public Acceptor(Node[] nodeList){ 	// create with node list, for update calls
         nodes = nodeList;
 	}

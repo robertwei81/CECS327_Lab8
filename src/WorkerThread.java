@@ -10,20 +10,26 @@ public class WorkerThread extends Thread{
 	private Lock mLock;
 	private Requestor mRequestAgent;
 	private Acceptor mAcceptAgent;
+	public ArrayList<InetAddress>mSystemList;
 	
 	public WorkerThread(){}	// must have a way to point back to data, and tokens
-	public WorkerThread(Node[] nodes) {
+	public WorkerThread(Node[] nodes, ArrayList<InetAddress> systems) {
 		mRand = new Random();
 		mDataPoint = nodes;
 		mLock = new ReentrantLock();
+		mSystemList = systems;
 	}
 	public void run(){
 		for (int run = 0; run < mRepetition; run++){
 			int index = mRand.nextInt(mNumOfNodes);   //randomly choose a node to update
 			GrabToken(index);
+			mAcceptAgent=new Acceptor();
+			mAcceptAgent.start();
 			while (mAcceptAgent.CurrentToken.mTokenState!=1) //busy wait
 			{	//while loop checks if agent caught an token for update, aka state 1
 				GrabToken(index);
+				mAcceptAgent=new Acceptor();
+				mAcceptAgent.start();
 			}
 			Update(index); 			//update node on local system
 			try {Thread.sleep(10);}//10 milliseconds sleep 
@@ -39,11 +45,10 @@ public class WorkerThread extends Thread{
 		catch (UnknownHostException e) {e.printStackTrace();}
 		Asking.mThreadID=ThreadID.get();
 		Asking.mTokenState=0;
-		mRequestAgent = new Requestor();
-		mRequestAgent.mFootball=Asking; // renew agent, and update its token
-		mRequestAgent.start();			// renew agent
-		mAcceptAgent = new Acceptor();
-		mAcceptAgent.start();			// restart agent to catch a token(with permission set to 1)
+		for (int count=0; count < mSystemList.size();count++){
+			mRequestAgent = new Requestor(mSystemList.get(count),Asking);
+		}
+		mRequestAgent.start();			// start agent
 	}
 	private void Update(int index){
 		mLock.lock();
