@@ -23,6 +23,13 @@ public class Lab8Tester {
 		ArrayList<InetAddress> mSystemList = new ArrayList<InetAddress>();
 		mSystemList.add(ipAddress);
 		mSystemList.add(primaryHostIP);//add additional system list as needed
+		InetAddress tempIP = null;
+		try {tempIP = InetAddress.getByName("172.20.10.4");
+		} catch (UnknownHostException e) {e.printStackTrace();}
+		mSystemList.add(tempIP);
+		try {tempIP = InetAddress.getByName("172.20.10.5");
+		} catch (UnknownHostException e) {e.printStackTrace();}
+		mSystemList.add(tempIP);
 		Requestor mRequestAgent = new Requestor();  //may need to request for update for other systems
 		Acceptor mAcceptorAgent = new Acceptor();
 

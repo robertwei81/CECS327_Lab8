@@ -32,7 +32,8 @@ public class Requestor extends Thread{
 	}
 	public void closeSocket(){
 		try{
-			this.dataSocket.close();
+			dataSocket.close();
+			dataOut.close();
 		} catch(IOException e){}
 	}
 	public void Update(Token football, InetAddress toHost) {
@@ -44,8 +45,9 @@ public class Requestor extends Thread{
 
 	public void run(){
 		try{
-			this.dataOut.writeObject(mFootball);
-			this.dataOut.flush();
+			dataOut.writeObject(mFootball);
+			dataOut.flush();
 		} catch(IOException e){}
+		closeSocket();
 	}
 }
