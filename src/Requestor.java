@@ -10,7 +10,9 @@ public class Requestor extends Thread{
 	int RequestTokenPort = 1024;
 	int defaultPort = 1024;
 	Token mFootball;
-	public Requestor() {}
+	public Requestor() {
+		mFootball = new Token();
+	}
 	public Requestor(InetAddress toHost, int portNum){
 		OpenSendSocket(toHost, 1024);
 	}

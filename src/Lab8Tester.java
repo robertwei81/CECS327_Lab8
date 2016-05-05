@@ -16,7 +16,7 @@ public class Lab8Tester {
 		catch (UnknownHostException e1) {e1.printStackTrace();} 	// need to change based on our setup
 		
 		WorkerThread [] mThreads = new WorkerThread[100];	// worker thread array
-		int ThreadCount = 1;				// req: num of threads
+		int ThreadCount = 100;				// req: num of threads
 		int NodeCount = 150;				// req: num of nodes
 		int CharactorCount = 500;			// req: num of char per node
 		Node[]Nodes = new Node[NodeCount];		// node array
@@ -32,8 +32,6 @@ public class Lab8Tester {
 		mSystemList.add(tempIP);
 		Requestor mRequestAgent = new Requestor();  //may need to request for update for other systems
 		Acceptor mAcceptorAgent = new Acceptor();
-
-
 		
 		//Initialize Nodes
 		if (primaryHostIP == ipAddress){

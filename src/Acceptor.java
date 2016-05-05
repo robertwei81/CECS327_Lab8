@@ -54,7 +54,7 @@ public class Acceptor extends Thread{
 	}
 	public void run(){
 		OpenReceiveSocket();
-		
-		try {closeSocket();} catch (IOException e) {e.printStackTrace();}
+	
+		//try {closeSocket();} catch (IOException e) {e.printStackTrace();}
 	}
 }
