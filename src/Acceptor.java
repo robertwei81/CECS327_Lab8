@@ -47,6 +47,7 @@ public class Acceptor extends Thread{
 	}
 	public void closeSocket() throws IOException{
 		DataSocket.close();
+		OpenInSocket.close();
 	}
 	public void SetSystemList(ArrayList<InetAddress>System){
 		mSystemList=System;
