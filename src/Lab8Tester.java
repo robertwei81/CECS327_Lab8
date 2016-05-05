@@ -16,10 +16,10 @@ public class Lab8Tester {
 		catch (UnknownHostException e1) {e1.printStackTrace();} 	// need to change based on our setup
 		
 		WorkerThread [] mThreads = new WorkerThread[100];	// worker thread array
-		int ThreadCount = 100;				// req: num of threads
+		int ThreadCount = 1;				// req: num of threads
 		int NodeCount = 150;				// req: num of nodes
 		int CharactorCount = 500;			// req: num of char per node
-		Node[]Nodes = new Node[150];		// node array
+		Node[]Nodes = new Node[NodeCount];		// node array
 		ArrayList<InetAddress> mSystemList = new ArrayList<InetAddress>();
 		mSystemList.add(ipAddress);
 		mSystemList.add(primaryHostIP);//add additional system list as needed
@@ -38,8 +38,7 @@ public class Lab8Tester {
 				football.mSystemIP=ipAddress;			//set token system ip to this host
 				football.mThreadID=ThreadID.get();		//set token thread id to this thread
 				football.mTokenState=1;					//set token for update
-				for (int list=0;list<mSystemList.size();list++) //loop the system list
-				{
+				for (int list=0;list<mSystemList.size();list++){ //loop the system list
 					if (mSystemList.get(list) != ipAddress){
 						mRequestAgent.Update(football,mSystemList.get(list));	//pass ball to requester,and who to send to
 						mRequestAgent.start();
@@ -51,7 +50,6 @@ public class Lab8Tester {
 			for(int count=0;count<NodeCount;count++){
 				mAcceptorAgent = new Acceptor();
 				mAcceptorAgent.start();
-				// do we need a slight wait between each reception?
 			}	
 		}
 		//Initialize Threads

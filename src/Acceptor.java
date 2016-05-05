@@ -13,31 +13,21 @@ public class Acceptor extends Thread{
 	int defaultPort = 1024;
 	InetAddress hostName;
     Node[] nodes;
-    Token CurrentToken;
+    Token mFootball;
     public ArrayList<InetAddress>mSystemList= new ArrayList<InetAddress>();
 
-    public Acceptor(){OpenReceiveSocket();}					//default, dont open socket till run time
-	public Acceptor(Node[] nodeList){ 	// create with node list, for update calls
-        nodes = nodeList;
-	}
+    public Acceptor(){
+    	mFootball = new Token();
+    	mFootball.mTokenState=-1;
+    }					//default, dont open socket till run time
 	public void OpenReceiveSocket(){
 		try {
 			OpenInSocket = new ServerSocket(defaultPort);
 			DataSocket = OpenInSocket.accept();
 			dataIn = (ObjectInputStream) DataSocket.getInputStream();
-			try {
-				CurrentToken = (Token) dataIn.readObject();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			try {mFootball = (Token) dataIn.readObject();} 
+			catch (ClassNotFoundException e) {e.printStackTrace();			}
 		} catch (IOException e) {}
-		
-	}
-	public Node readNode(int index) throws ClassNotFoundException, IOException{	
-		Node inObject = (Node) dataIn.readObject();
-                nodes[index] = inObject;
-		return inObject;
 	}
 	public void readToken() throws ClassNotFoundException, IOException{	
 		Token inObject = (Token) dataIn.readObject();
@@ -61,12 +51,9 @@ public class Acceptor extends Thread{
 	public void SetSystemList(ArrayList<InetAddress>System){
 		mSystemList=System;
 	}
-	public void OpenReceiveSocket(InetAddress primaryHostIP) {
-		// TODO Auto-generated method stub
+	public void run(){
+		OpenReceiveSocket();
 		
+		try {closeSocket();} catch (IOException e) {e.printStackTrace();}
 	}
-        
-	/*public static void main(String[] args){
-		//Acceptor.readMessage(1234, "192.168.0.8");
-	}*/
 }

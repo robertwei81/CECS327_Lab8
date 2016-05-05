@@ -25,8 +25,10 @@ public class WorkerThread extends Thread{
 			GrabToken(index);
 			mAcceptAgent=new Acceptor();
 			mAcceptAgent.start();
-			while (mAcceptAgent.CurrentToken.mTokenState!=1) //busy wait
+			while (mAcceptAgent.mFootball.mTokenState!=1) //busy wait
 			{	//while loop checks if agent caught an token for update, aka state 1
+				while (mAcceptAgent.mFootball.mTokenState==-1)
+					try {sleep(15);} catch (InterruptedException e) {e.printStackTrace();}
 				GrabToken(index);
 				mAcceptAgent=new Acceptor();
 				mAcceptAgent.start();
@@ -55,7 +57,7 @@ public class WorkerThread extends Thread{
 		try{
 			mDataPoint[index].ShuffleNode();
 			mRequestAgent = new Requestor();
-			mRequestAgent.mFootball=mAcceptAgent.CurrentToken;  //grab latest token from agent
+			mRequestAgent.mFootball=mAcceptAgent.mFootball;  //grab latest token from agent
 			mRequestAgent.mFootball.mNode=mDataPoint[index];	//update node for token
 			mRequestAgent.start(); 	//set it and forget ??? or do we get update confirmation
 									// 1. Possibly no; because if an acceptor catches it with a state 2, it will update locally
